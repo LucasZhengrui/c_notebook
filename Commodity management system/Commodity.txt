@@ -1,0 +1,5 @@
+Iphone  002  Electric  Apple  USA  4950.00  5000.00  -50.00  2019.6.1  120  2029.6.1  20  A
+Earphone  003  Electric  Sony  Malaysia  891.00  950.00  -59.00  2019.6.1  120  2029.6.1  40  W
+Earphone  004  Electric  Samsung  USA  891.00  950.00  -59.00  2019.7.1  120  2029.7.1  20  W
+Itouch  005  Electric  Apple  USA  1800.00  1700.00  100.00  2000.2.29  12  2001.3.2  30  W
+Fish  006  Food  None  Hainan  20.00  15.00  5.00  2019.7.1  1  2019.8.1  30  W
