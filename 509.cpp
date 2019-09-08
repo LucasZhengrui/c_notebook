@@ -28,10 +28,10 @@ int fib(int N){
   {
     return N;
   }
-  if(N>1)
-  {
-    return fib(N - 1) + fib(N - 2);
-  }
+  // if(N>1)
+  // {
+  return fib(N - 1) + fib(N - 2);
+  // }
 }
 int main()
 {
