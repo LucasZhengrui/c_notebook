@@ -207,6 +207,73 @@ void print(LinkList *L) {
   printf("\n");
 }
 
+//菜单函数
+void menu()
+{
+  LinkList *L = Init();//初始化单链表
+  int num;
+  int k = 1;
+  printf("\n\n单链表\n\n");
+  printf("---------菜单----------------\n");
+  printf("| 1、显示  | 2、用头插法插入 |\n");
+  printf("| 3、查找  | 4、用尾插法插入 |\n");
+  printf("| 5、删除  | 6、计算表的长度 |\n");
+  printf("| 7、结束  | 8、            |\n");
+  printf("----------------------------\n");
+  printf("请输入你想选择的功能序号：    \n");
+  scanf("%d",&num);
+  switch(num)
+  {
+    case 1:
+    {
+      print(L);
+      break;
+    }
+    case 2:
+    {
+      CreateFromHead(L);;
+      break;
+    }
+    case 3:
+    {
+      break;
+    }
+    case 4:
+    {
+      CreateFromTail(L);
+      break;
+    }
+    case 5:
+    {
+      int a;
+      printf("Input the number you want to delete ");
+      scanf("%d",&a);
+      DeleteList(L,a,'e');
+      printf("Delete NO.%d point.\n",a);
+      printf("After delete \n");
+      print(L);
+      break;
+    }
+    case 6:
+    {
+      printf("The Length is ");
+      ListLength(L);
+      printf("\n");
+      break;
+    }
+    case 7:
+    {
+      k=0;
+      break;
+    }
+    default:
+    {
+      printf("检查输入数据的准确性！\n");
+      exit(0);
+    }
+  }
+}
+
 //函数的声明
 LinkList *Init();//初始化单链表
 void *CreateFromHead(LinkList *L);//用头插法建立单链表
@@ -221,29 +288,35 @@ void print(LinkList *L);//显示函数
 
 int main()
 {
-//测试初始化单链表函数
-  LinkList *L = Init();
+// //测试初始化单链表函数
+//   LinkList *L = Init();
+//
+// //测试用头插法插入数据
+//   CreateFromHead(L);
+//
+// //测试显示函数
+//   printf("After Init\n");
+//   print(L);
+//
+// //测试长度函数
+//   printf("The Length is ");
+//   ListLength(L);
+//   printf("\n");
+//
+// //测试删除函数
+//   int a;
+//   printf("Input the number you want to delete ");
+//   scanf("%d",&a);
+//   DeleteList(L,a,'e');
+//   printf("Delete Num.%d point.\n",a);
+//   printf("After delete \n");
+//   print(L);
 
-//测试用头插法插入数据
-  CreateFromHead(L);
-
-//测试显示函数
-  printf("After Init\n");
-  print(L);
-
-//测试长度函数
-  printf("The Length is ");
-  ListLength(L);
-  printf("\n");
-
-//测试删除函数
-  int a;
-  printf("Input the number you want to delete ");
-  scanf("%d",&a);
-  DeleteList(L,a,'e');
-  printf("Delete Num.%d point.\n",a);
-  printf("After delete \n");
-  print(L);
-
+  int k = 1;
+  while(k)
+  {
+    menu();
+  }
+  system("pause");
   return 0;
 }
