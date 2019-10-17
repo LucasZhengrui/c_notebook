@@ -65,3 +65,17 @@ where course_id in(select course_id
 -- stu_id
 -- 200215121
 -- 200215123
+
+--用派生表的方法解决（正确的写法）
+select b.stu_id
+from (select *
+	  from elective_course
+	  where stu_id='200215122')as a left join elective_course b on a.course_id=b.course_id  --派生出一个a表
+where b.stu_id!='200215122'
+group by b.stu_id
+having count(*)=(select count(*)
+				 from elective_course
+				 where stu_id='200215122');
+
+         -- stu_id
+         -- 200215121
