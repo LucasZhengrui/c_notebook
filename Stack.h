@@ -66,9 +66,11 @@ void IsEmpty(SeqStack *S)
   if(S->top==-1)
   {
     printf("Empty Stack!\n");
+    return;
   }
   else
   {
     printf("Not Empty!\n");
+    return;
   }
 }
