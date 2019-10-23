@@ -59,3 +59,16 @@ int GetTop(SeqStack *S,StackElementType *x)
     return 1;
   }
 }
+
+//判空栈
+void IsEmpty(SeqStack *S)
+{
+  if(S->top==-1)
+  {
+    printf("Empty Stack!\n");
+  }
+  else
+  {
+    printf("Not Empty!\n");
+  }
+}
