@@ -1,9 +1,15 @@
 #include "stdio.h"
 #include "stdlib.h"
-
+typedef struct node
+{
+  char data;// 数据域
+  int ltag;// 左标志
+  int rtag;// 右标志
+  struct node *LChild,*RChild;
+}BiTree;
 // 先序遍历二叉树
 
-void PreOrder(BiTree root)
+void PreOrder(BiTree *root)
 // 先序遍历二叉树，root为指向二叉树（或某一子树）根结点的指针
 {
   if(root!=NULL)
@@ -16,7 +22,7 @@ void PreOrder(BiTree root)
 
 // 中序遍历二叉树
 
-void InOrder(BiTree root)
+void InOrder(BiTree *root)
 // 中序遍历二叉树，root为指向二叉树（或某一子树）根结点的指针
 {
   if(root!=NULL)
@@ -29,7 +35,7 @@ void InOrder(BiTree root)
 
 // 后序遍历二叉树
 
-void PostOrder(BiTree root)
+void PostOrder(BiTree *root)
 // 后序遍历二叉树，root为指向二叉树（或某一子树）根结点的指针
 {
   if(root!=NULL)
