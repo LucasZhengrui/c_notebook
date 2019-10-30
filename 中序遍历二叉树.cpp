@@ -129,3 +129,28 @@ void Travel_inorder(BiTree *b)
     }
   }
 }
+
+// 函数的声明
+
+BiTree *CreateBiTree();
+void inorder_Thread(BiTree *p);
+void InOrder1(BiTree *bt);
+void InOrder2(BiTree *bt);
+BiTree *Inorder_Next(BiTree *p);
+void Travel_inorder(BiTree *b);
+
+//主函数
+
+int main()
+{
+  BiTree *root;
+
+  root=CreateBiTree();
+  printf("\n中序递归遍历算法结果：");
+  InOrder1(root);
+  printf("\n中序非递归遍历算法结果：");
+  InOrder2(root);
+  inorder_Thread(root);
+  printf("\n中序线索二叉树遍历算法结果：");
+  Travel_inorder(root);
+}
