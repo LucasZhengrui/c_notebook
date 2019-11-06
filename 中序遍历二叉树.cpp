@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #define M 100
 
+
+typedef enum{ Link, Thread } PointerTag;
+
 typedef struct node
 {
   char data;// 数据域
@@ -62,7 +65,7 @@ void inorder_Thread(BiTree *p)
   }
 }
 
-// 中序遍历二叉树非递归算法1
+// 中序遍历二叉树递归算法
 void InOrder(BiTree *bt)
 {
   if(bt==NULL)
@@ -74,9 +77,9 @@ void InOrder(BiTree *bt)
   InOrder(bt->RightChild);
 }
 
-// 中序遍历二叉树非递归算法2
-//void InOrder2(BiTree *bt)
-//{
+// // 中序遍历二叉树非递归算法
+// void InOrder2(BiTree *bt)
+// {
 //  int i=0;
 //  BiTree *p,*s[M];
 //  p=bt;
@@ -92,7 +95,28 @@ void InOrder(BiTree *bt)
 //      }
 //    }
 //  } while(i>0||p!=NULL);
-//}
+// }
+
+// void InThreding(BiTree *BT)
+// {
+// 	if (BT)
+// 	{
+// 		InThreding(BT->LeftChild);//递归左孩子线索化
+// 		//结点处理
+// 		if (!BT->LeftChild)      //如果该结点没有左孩子，
+// 		{
+// 			BT->LeftTag = 1;
+// 			BT->LeftChild = pre;
+// 		}
+// 		if (!pre->RightChild)
+// 		{
+// 			pre->RightTag = 1;
+// 			pre->RightChild = BT;
+// 		}
+// 		pre = BT;
+// 		InThreding(BT->RightChild);//递归右孩子线索化
+// 	}
+// }
 
 BiTree *Inorder_Next(BiTree *p)
 {
@@ -115,6 +139,7 @@ BiTree *Inorder_Next(BiTree *p)
   return NULL;
 }
 
+// 线索化二叉树
 void Travel_inorder(BiTree *b)
 {
   BiTree *p=b;
@@ -129,7 +154,6 @@ void Travel_inorder(BiTree *b)
     }
   }
 }
-
 
 // 求二叉树的高度，即层深参数nlayer
 int TreeDepth(BiTree *bt)
@@ -170,9 +194,10 @@ void PrintTree(BiTree *bt,int nLayer)// 按竖向树状打印的二叉树,nLayer为层深参数
 
 BiTree *CreateBiTree();// 创建二叉树
 void inorder_Thread(BiTree *p);
-void InOrder(BiTree *bt);// 中序非递归遍历算法结果
+void InOrder(BiTree *bt);// 中序递归遍历算法结果
+void InOrder2(BiTree *bt);// 中序非递归遍历算法结果
 BiTree *Inorder_Next(BiTree *p);
-void Travel_inorder(BiTree *b);
+void Travel_inorder(BiTree *b);// 线索化二叉树
 int TreeDepth(BiTree *bt);//深度函数
 void PrintTree(BiTree *bt,int nLayer);// 按树状打印二叉树
 
@@ -184,15 +209,16 @@ int main()
   BiTree *root;
 
   root=CreateBiTree();
-  // Travel_inorder(root);
-  printf("\n中序非递归遍历算法结果：");
-  InOrder(root);
-//  printf("\n中序递归遍历算法结果：");
+  nLayer=TreeDepth(root);
   inorder_Thread(root);
+
+  printf("\n中序递归遍历算法结果：");
+  InOrder(root);
+  printf("\n中序非递归遍历算法结果：");
+  // InThreding(root);
   printf("\n中序线索化二叉树遍历算法结果：");
   Travel_inorder(root);
   printf("\n中序遍历二叉树的高度：");
-  nLayer=TreeDepth(root);
   printf("%d",nLayer);
   printf("\n中序遍历二叉树的打印：\n");
   PrintTree(root,nLayer);
