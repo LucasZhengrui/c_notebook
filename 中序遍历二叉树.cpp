@@ -77,25 +77,34 @@ void InOrder(BiTree *bt)
   InOrder(bt->RightChild);
 }
 
-// // 中序遍历二叉树非递归算法
-// void InOrder2(BiTree *bt)
-// {
-//  int i=0;
-//  BiTree *p,*s[M];
-//  p=bt;
-//  do {
-//    while (p!=NULL) {
-//      s[i++]=p;
-//      p=p->LeftChild;
-//      if(i>0)
-//      {
-//        p=s[-i];
-//        printf("%d\t",p->data);
-//        p=p->RightChild;
-//      }
-//    }
-//  } while(i>0||p!=NULL);
-// }
+// 中序遍历二叉树非递归算法
+
+void InOrder3(BiTree *bt)
+{
+  int i=0;
+  BiTree *s[M];
+  while(bt)
+  {
+    while(bt->LeftChild)
+    {
+      s[i++]=bt;
+      bt=bt->LeftChild;
+    }
+    printf("%c ",bt->data);
+    if(bt->RightChild)
+    {
+      bt=bt->RightChild;
+      continue;
+    }
+    while(!bt->RightChild && i>0)
+    {
+      bt=s[--i];
+      printf("%c ",bt->data);
+    }
+    bt=bt->RightChild;
+  }
+  printf("\n");
+}
 
 // void InThreding(BiTree *BT)
 // {
@@ -215,7 +224,7 @@ int main()
   printf("\n中序递归遍历算法结果：");
   InOrder(root);
   printf("\n中序非递归遍历算法结果：");
-  // InThreding(root);
+  InOrder3(root);
   printf("\n中序线索化二叉树遍历算法结果：");
   Travel_inorder(root);
   printf("\n中序遍历二叉树的高度：");
