@@ -78,28 +78,46 @@ void InOrder(BiTree *bt)
 }
 
 // 中序遍历二叉树非递归算法
-
+// void InOrder2(BiTree *bt)
+// {
+//  int i=0;
+//  BiTree *p,*s[M];
+//  p=bt;
+//  do {
+//    while (p!=NULL) {
+//      s[i++]=p;
+//      p=p->LeftChild;
+//      if(i>0)
+//      {
+//        p=s[-i];
+//        printf("%d\t",p->data);
+//        p=p->RightChild;
+//      }
+//    }
+//  } while(i>0||p!=NULL);
+// }
+// 修改
 void InOrder3(BiTree *bt)
 {
   int i=0;
   BiTree *s[M];
-  while(bt)
+  while(bt)// 将根节点赋值给bt
   {
-    while(bt->LeftChild)
+    while(bt->LeftChild)// 如果有左孩子，继续
     {
       s[i++]=bt;
-      bt=bt->LeftChild;
+      bt=bt->LeftChild;// 将根节点的左孩子赋值给bt
     }
-    printf("%c ",bt->data);
-    if(bt->RightChild)
+    printf("%c ",bt->data);// 打印出根节点的左孩子
+    if(bt->RightChild)// 如果该左孩子有右孩子
     {
-      bt=bt->RightChild;
+      bt=bt->RightChild;// 则将该左孩子的右孩子赋值给bt
       continue;
     }
-    while(!bt->RightChild && i>0)
+    while(!bt->RightChild && i>0)// 如果此时的bt没有右孩子，且此时bt不是根节点
     {
-      bt=s[--i];
-      printf("%c ",bt->data);
+      bt=s[--i];// 将bt退回根节点，并循环回去判断根节点的右孩子
+      printf("%c ",bt->data);// 打印根节点
     }
     bt=bt->RightChild;
   }
@@ -202,9 +220,9 @@ void PrintTree(BiTree *bt,int nLayer)// 按竖向树状打印的二叉树,nLayer为层深参数
 // 函数的声明
 
 BiTree *CreateBiTree();// 创建二叉树
-void inorder_Thread(BiTree *p);
+void inorder_Thread(BiTree *p);// 中序线索化
 void InOrder(BiTree *bt);// 中序递归遍历算法结果
-void InOrder2(BiTree *bt);// 中序非递归遍历算法结果
+void InOrder3(BiTree *bt);// 中序非递归遍历算法结果
 BiTree *Inorder_Next(BiTree *p);
 void Travel_inorder(BiTree *b);// 线索化二叉树
 int TreeDepth(BiTree *bt);//深度函数
@@ -219,7 +237,7 @@ int main()
 
   root=CreateBiTree();
   nLayer=TreeDepth(root);
-  inorder_Thread(root);
+  inorder_Thread(root);// 中序线索化
 
   printf("\n中序递归遍历算法结果：");
   InOrder(root);
