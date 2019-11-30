@@ -1,6 +1,6 @@
 //预处理部分，包含所要使用函数对应的头文件或者程序文件，以及符号常量的定义
 #include<stdio.h>
-#define N 5
+#define N 11
 
 //可能使用的函数的原型
 void Input(int a[N]);// 输入函数
