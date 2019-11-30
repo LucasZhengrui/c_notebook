@@ -1,33 +1,35 @@
 //预处理部分，包含所要使用函数对应的头文件或者程序文件，以及符号常量的定义
 #include<stdio.h>
 #define N 5
+
 //可能使用的函数的原型
-void Input(int a[N]);
-void Output(int a[N]);
-void Select_Sort(int a[N]);
+void Input(int a[N]);// 输入函数
+void Output(int a[N]);// 输出函数
+void Select_Sort(int a[N]);// 直接选择排序的实现
+
 //所有可能使用的函数的定义部分
 void Input(int a[N])
 {
 	int i;
-	
+
 	for(i=0;i<N;i++)
 	{
-		scanf("%d",&a[i]);	
-	}	
+		scanf("%d",&a[i]);
+	}
 }
 void Output(int a[N])
 {
 	int i;
-	
+
 	for(i=0;i<N;i++)
 	{
-		printf("%d  ",a[i]);	
-	}		
+		printf("%d  ",a[i]);
+	}
 }
 void Select_Sort(int a[N])
 {
 	int i,j,t,min;
-	
+
 	for(i=0;i<N-1;i++)
 	{
 		min=i;
@@ -46,16 +48,17 @@ void Select_Sort(int a[N])
 		}
 	}
 }
+
 //主函数
 int main()
 {
 	int b[N];
-	
+
 	Input(b);
 	Output(b);
 	Select_Sort(b);
 	printf("\n");
 	Output(b);
-	
-	return 0;	
-} 
+
+	return 0;
+}
