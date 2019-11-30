@@ -9,7 +9,7 @@ void input(int R[N])// 输入函数
   }
 }
 
-void SeqSearch(int R[N],int key)// 查找函数
+void SeqSearch(int R[N],int key)// 顺序查找函数
 {
   // scanf("%d",&key);
   for(int i=1;i<=N-1;i++)
@@ -34,6 +34,11 @@ void output(int R[N])// 输出函数
   }
   printf("\n");
 }
+
+// 函数的声明
+void input(int R[N]);// 输入函数
+void SeqSearch(int R[N],int key);// 顺序查找函数
+void output(int R[N]);// 输出函数
 
 int main(int argc, char const *argv[]) {
   int R[N];
