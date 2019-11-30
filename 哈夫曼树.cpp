@@ -8,7 +8,7 @@
 // n=n0+n2.当n0=30时，根据二叉树系性质n0=n2+1,n2=n0-1=29,所以哈夫曼树
 // 最多有30+29=59个结点
 
-// 用静态三叉链表实现的哈夫曼树类型定义如下
+// 用静态二叉链表实现的哈夫曼树类型定义如下
 
 typedef struct
 {
@@ -36,8 +36,9 @@ int scan()
 }
 
 // 创建哈夫曼树算法
-void CreateHuffmanTree(HtNode HuffNode[])
+void CreateHuffmanTree()
 {
+  HtNode *HuffNode[MAXNODE];
   int i,j;
   int m1,m2;// 叶子结点
   int x1,x2;
@@ -48,17 +49,17 @@ void CreateHuffmanTree(HtNode HuffNode[])
 
   for(i=0;i<2*a-1;i++)// 2*a-1是哈夫曼树的深度
   {
-    HuffNode[i].weight=0;// 初始化权值为0
-    HuffNode[i].parent=-1;// 初始化双亲下标
-    HuffNode[i].LeftChild=-1;// 初始化左孩子
-    HuffNode[i].RightChild=-1;// 初始化右孩子
+    HuffNode[i]->weight=0;// 初始化权值为0
+    HuffNode[i]->parent=-1;// 初始化双亲下标
+    HuffNode[i]->LeftChild=-1;// 初始化左孩子
+    HuffNode[i]->RightChild=-1;// 初始化右孩子
   }
 
   //初始化完成！
 
   for(i=0;i<a;i++)
   {
-    scanf("%d",&HuffNode[i].weight);// 输入权值
+    scanf("%d",&HuffNode[i]->weight);// 输入权值
   }
 
   for(i=0;i<a-1;i++)
@@ -67,24 +68,24 @@ void CreateHuffmanTree(HtNode HuffNode[])
     x1=x2=0;
     for(j=0;j<a+i;j++)
     {
-      if (HuffNode[j].parent==-1&&HuffNode[j].weight<m1)
+      if (HuffNode[j]->parent==-1&&HuffNode[j]->weight<m1)
       {
         m2=m1;
         x2=x1;
-        m1=HuffNode[j].weight;
+        m1=HuffNode[j]->weight;
         x1=j;// 输出x1（表示深度）
       }
-      else if(HuffNode[j].parent==-1&&HuffNode[j].weight<m2)
+      else if(HuffNode[j]->parent==-1&&HuffNode[j]->weight<m2)
       {
-        m2=HuffNode[j].weight;
+        m2=HuffNode[j]->weight;
         x2=j;// 输出深度
       }
     }
-    HuffNode[x1].parent=a+i;
-    HuffNode[x2].parent=a+i;
-    HuffNode[a+i].weight=HuffNode[x1].weight+HuffNode[x2].weight;
-    HuffNode[a+i].LeftChild=x1;
-    HuffNode[a+i].RightChild=x2;
+    HuffNode[x1]->parent=a+i;
+    HuffNode[x2]->parent=a+i;
+    HuffNode[a+i]->weight=HuffNode[x1]->weight+HuffNode[x2]->weight;
+    HuffNode[a+i]->LeftChild=x1;
+    HuffNode[a+i]->RightChild=x2;
   }
 }
 // void CreateHuffmanTree(HuffmanTree ht,int w[],int n)
@@ -112,45 +113,45 @@ void CreateHuffmanTree(HtNode HuffNode[])
 // 哈夫曼编码的实现
 void HuffmanCode()
 {
-  HtNode HuffNode[MAXNODE];
-  HCodeType HuffCode[MAXLEAF],cd;
+  HtNode *HuffNode[MAXNODE];
+  HCodeType *HuffCode[MAXLEAF],*cd;
   int i,j;
   int c,p;
   int b;// 定义叶子的结点数
   b=scan();// 将“输入叶子结点函数”中输入的叶子结点赋值给b
 
-  CreateHuffmanTree(HuffNode);
+  CreateHuffmanTree();
   // 建立哈夫曼树
   for(i=0;i<b;i++)
   {
-    cd.start=b-1;
+    cd->start=b-1;
     c=i;
-    p=HuffNode[c].parent;
+    p=HuffNode[c]->parent;
     while(p!=-1)
     {
-      if(HuffNode[p].LeftChild==c)
+      if(HuffNode[p]->LeftChild==c)
       {
-        cd.bit[cd.start]=0;
+        cd->bit[cd->start]=0;
       }
       else
       {
-        cd.bit[cd.start]=1;
+        cd->bit[cd->start]=1;
       }
-      cd.start--;
+      cd->start--;
       c=p;
-      p=HuffNode[c].parent;
+      p=HuffNode[c]->parent;
     }
-    for(j=cd.start+1;j<b;j++)
+    for(j=cd->start+1;j<b;j++)
     {
-      HuffCode[i].bit[i]=cd.bit[j];
+      HuffCode[i]->bit[i]=cd->bit[j];
     }
-    HuffCode[i].start=cd.start;
+    HuffCode[i]->start=cd->start;
   }
   for(i=0;i<b;i++)
   {
-    for(j=HuffCode[i].start+1;j<b;j++)
+    for(j=HuffCode[i]->start+1;j<b;j++)
     {
-      printf("%d",HuffCode[i].bit[j]);
+      printf("%d",HuffCode[i]->bit[j]);
     }
     printf("\n");
   }
@@ -158,14 +159,16 @@ void HuffmanCode()
 
 // 函数的声明
 int scan();// 输入叶子的结点数的函数
-void CreateHuffmanTree(HtNode HuffNode[]);// 创建一个哈夫曼树
+void CreateHuffmanTree(HtNode *HuffNode[]);// 创建一个哈夫曼树
 void HuffmanCode();// 哈夫曼编码的实现
 
 int main(int argc, char const *argv[]) {
   int e;
+  HtNode HuffNode[MAXNODE];
   e=scan();
   printf("叶子的结点数为 %d\n",e);
+  CreateHuffmanTree();
   HuffmanCode();
-  
+
   return 0;
 }
