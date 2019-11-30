@@ -47,6 +47,7 @@ int main(int argc, char const *argv[]) {
   input(R);
   printf("The data you input are:\n");
   output(R);
+  printf("\n");
   printf("Please input the data you want to search!\n");
   scanf("%d",&key);
   printf("The data you want to search is NO.");
