@@ -7,15 +7,15 @@ typedef enum{ Link, Thread } PointerTag;
 
 typedef struct node
 {
-  char data;// Êı¾İÓò
-  int LeftTag;// ×ó±êÖ¾
-  int RightTag;// ÓÒ±êÖ¾
-  struct node *LeftChild,*RightChild;// ×óº¢×Ó£¬ÓÒº¢×Ó
-}BiTree;// Ê÷
+  char data;// æ•°æ®åŸŸ
+  int LeftTag;// å·¦æ ‡å¿—
+  int RightTag;// å³æ ‡å¿—
+  struct node *LeftChild,*RightChild;// å·¦å­©å­ï¼Œå³å­©å­
+}BiTree;// æ ‘
 
-BiTree *pre=NULL;// ¸Õ´¦Àí¹ıµÄ½áµã
+BiTree *pre=NULL;// åˆšå¤„ç†è¿‡çš„ç»“ç‚¹
 
-// ÓÃÀ©Õ¹ÖĞĞò±éÀúĞòÁĞ´´½¨¶ş²æÁ´±í
+// ç”¨æ‰©å±•ä¸­åºéå†åºåˆ—åˆ›å»ºäºŒå‰é“¾è¡¨
 BiTree *CreateBiTree()
 {
   BiTree *bt;
@@ -35,7 +35,7 @@ BiTree *CreateBiTree()
   return bt;
 }
 
-// ÖĞĞò±éÀú¶ş²æÊ÷·Çµİ¹éËã·¨³õ²½
+// ä¸­åºéå†äºŒå‰æ ‘éé€’å½’ç®—æ³•åˆæ­¥
 void inorder_Thread(BiTree *p)
 {
   if(p!=NULL)
@@ -65,7 +65,7 @@ void inorder_Thread(BiTree *p)
   }
 }
 
-// ÖĞĞò±éÀú¶ş²æÊ÷µİ¹éËã·¨
+// ä¸­åºéå†äºŒå‰æ ‘é€’å½’ç®—æ³•
 void InOrder(BiTree *bt)
 {
   if(bt==NULL)
@@ -77,7 +77,7 @@ void InOrder(BiTree *bt)
   InOrder(bt->RightChild);
 }
 
-// ÖĞĞò±éÀú¶ş²æÊ÷·Çµİ¹éËã·¨
+// ä¸­åºéå†äºŒå‰æ ‘éé€’å½’ç®—æ³•
 // void InOrder2(BiTree *bt)
 // {
 //  int i=0;
@@ -96,28 +96,28 @@ void InOrder(BiTree *bt)
 //    }
 //  } while(i>0||p!=NULL);
 // }
-// ĞŞ¸Ä
+// ä¿®æ”¹
 void InOrder3(BiTree *bt)
 {
   int i=0;
   BiTree *s[M];
-  while(bt)// ½«¸ù½Úµã¸³Öµ¸øbt
+  while(bt)// å°†æ ¹èŠ‚ç‚¹èµ‹å€¼ç»™bt
   {
-    while(bt->LeftChild)// Èç¹ûÓĞ×óº¢×Ó£¬¼ÌĞø
+    while(bt->LeftChild)// å¦‚æœæœ‰å·¦å­©å­ï¼Œç»§ç»­
     {
       s[i++]=bt;
-      bt=bt->LeftChild;// ½«¸ù½ÚµãµÄ×óº¢×Ó¸³Öµ¸øbt
+      bt=bt->LeftChild;// å°†æ ¹èŠ‚ç‚¹çš„å·¦å­©å­èµ‹å€¼ç»™bt
     }
-    printf("%c ",bt->data);// ´òÓ¡³ö¸ù½ÚµãµÄ×óº¢×Ó
-    if(bt->RightChild)// Èç¹û¸Ã×óº¢×ÓÓĞÓÒº¢×Ó
+    printf("%c ",bt->data);// æ‰“å°å‡ºæ ¹èŠ‚ç‚¹çš„å·¦å­©å­
+    if(bt->RightChild)// å¦‚æœè¯¥å·¦å­©å­æœ‰å³å­©å­
     {
-      bt=bt->RightChild;// Ôò½«¸Ã×óº¢×ÓµÄÓÒº¢×Ó¸³Öµ¸øbt
+      bt=bt->RightChild;// åˆ™å°†è¯¥å·¦å­©å­çš„å³å­©å­èµ‹å€¼ç»™bt
       continue;
     }
-    while(!bt->RightChild && i>0)// Èç¹û´ËÊ±µÄbtÃ»ÓĞÓÒº¢×Ó£¬ÇÒ´ËÊ±bt²»ÊÇ¸ù½Úµã
+    while(!bt->RightChild && i>0)// å¦‚æœæ­¤æ—¶çš„btæ²¡æœ‰å³å­©å­ï¼Œä¸”æ­¤æ—¶btä¸æ˜¯æ ¹èŠ‚ç‚¹
     {
-      bt=s[--i];// ½«btÍË»Ø¸ù½Úµã£¬²¢Ñ­»·»ØÈ¥ÅĞ¶Ï¸ù½ÚµãµÄÓÒº¢×Ó
-      printf("%c ",bt->data);// ´òÓ¡¸ù½Úµã
+      bt=s[--i];// å°†bté€€å›æ ¹èŠ‚ç‚¹ï¼Œå¹¶å¾ªç¯å›å»åˆ¤æ–­æ ¹èŠ‚ç‚¹çš„å³å­©å­
+      printf("%c ",bt->data);// æ‰“å°æ ¹èŠ‚ç‚¹
     }
     bt=bt->RightChild;
   }
@@ -128,9 +128,9 @@ void InOrder3(BiTree *bt)
 // {
 // 	if (BT)
 // 	{
-// 		InThreding(BT->LeftChild);//µİ¹é×óº¢×ÓÏßË÷»¯
-// 		//½áµã´¦Àí
-// 		if (!BT->LeftChild)      //Èç¹û¸Ã½áµãÃ»ÓĞ×óº¢×Ó£¬
+// 		InThreding(BT->LeftChild);//é€’å½’å·¦å­©å­çº¿ç´¢åŒ–
+// 		//ç»“ç‚¹å¤„ç†
+// 		if (!BT->LeftChild)      //å¦‚æœè¯¥ç»“ç‚¹æ²¡æœ‰å·¦å­©å­ï¼Œ
 // 		{
 // 			BT->LeftTag = 1;
 // 			BT->LeftChild = pre;
@@ -141,7 +141,7 @@ void InOrder3(BiTree *bt)
 // 			pre->RightChild = BT;
 // 		}
 // 		pre = BT;
-// 		InThreding(BT->RightChild);//µİ¹éÓÒº¢×ÓÏßË÷»¯
+// 		InThreding(BT->RightChild);//é€’å½’å³å­©å­çº¿ç´¢åŒ–
 // 	}
 // }
 
@@ -166,7 +166,7 @@ BiTree *Inorder_Next(BiTree *p)
   return NULL;
 }
 
-// ÏßË÷»¯¶ş²æÊ÷
+// çº¿ç´¢åŒ–äºŒå‰æ ‘
 void Travel_inorder(BiTree *b)
 {
   BiTree *p=b;
@@ -182,17 +182,17 @@ void Travel_inorder(BiTree *b)
   }
 }
 
-// Çó¶ş²æÊ÷µÄ¸ß¶È£¬¼´²ãÉî²ÎÊınlayer
+// æ±‚äºŒå‰æ ‘çš„é«˜åº¦ï¼Œå³å±‚æ·±å‚æ•°nlayer
 int TreeDepth(BiTree *bt)
 {
-  int LeftDepth;// ×ó×ÓÊ÷µÄÉî¶È
-  int RightDepth;// ÓÒ×ÓÊ÷µÄÉî¶È
-  int Max;// ¶¨ÒåÒ»¸ö±äÁ¿£¬±íÊ¾×óÓÒ×ÓÊ÷µÄ½Ï´óÉî¶È
+  int LeftDepth;// å·¦å­æ ‘çš„æ·±åº¦
+  int RightDepth;// å³å­æ ‘çš„æ·±åº¦
+  int Max;// å®šä¹‰ä¸€ä¸ªå˜é‡ï¼Œè¡¨ç¤ºå·¦å³å­æ ‘çš„è¾ƒå¤§æ·±åº¦
   if(bt!=NULL)
   {
-    LeftDepth=TreeDepth(bt->LeftChild);// Çó×ó×ÓÊ÷µÄÉî¶È
-    RightDepth=TreeDepth(bt->RightChild);// ÇóÓÒ×ÓÊ÷µÄÉî¶È
-    Max=LeftDepth>RightDepth?LeftDepth:RightDepth;// µÃµ½½Ï´óÖµ
+    LeftDepth=TreeDepth(bt->LeftChild);// æ±‚å·¦å­æ ‘çš„æ·±åº¦
+    RightDepth=TreeDepth(bt->RightChild);// æ±‚å³å­æ ‘çš„æ·±åº¦
+    Max=LeftDepth>RightDepth?LeftDepth:RightDepth;// å¾—åˆ°è¾ƒå¤§å€¼
     return Max+1;
   }
   else
@@ -201,8 +201,8 @@ int TreeDepth(BiTree *bt)
   }
 }
 
-// °´Ê÷×´´òÓ¡¶ş²æÊ÷
-void PrintTree(BiTree *bt,int nLayer)// °´ÊúÏòÊ÷×´´òÓ¡µÄ¶ş²æÊ÷,nLayerÎª²ãÉî²ÎÊı
+// æŒ‰æ ‘çŠ¶æ‰“å°äºŒå‰æ ‘
+void PrintTree(BiTree *bt,int nLayer)// æŒ‰ç«–å‘æ ‘çŠ¶æ‰“å°çš„äºŒå‰æ ‘,nLayerä¸ºå±‚æ·±å‚æ•°
 {
   if(bt==NULL)
   {
@@ -217,18 +217,18 @@ void PrintTree(BiTree *bt,int nLayer)// °´ÊúÏòÊ÷×´´òÓ¡µÄ¶ş²æÊ÷,nLayerÎª²ãÉî²ÎÊı
   PrintTree(bt->RightChild,nLayer+1);
 }
 
-// º¯ÊıµÄÉùÃ÷
+// å‡½æ•°çš„å£°æ˜
 
-BiTree *CreateBiTree();// ´´½¨¶ş²æÊ÷
-void inorder_Thread(BiTree *p);// ÖĞĞòÏßË÷»¯
-void InOrder(BiTree *bt);// ÖĞĞòµİ¹é±éÀúËã·¨½á¹û
-void InOrder3(BiTree *bt);// ÖĞĞò·Çµİ¹é±éÀúËã·¨½á¹û
+BiTree *CreateBiTree();// åˆ›å»ºäºŒå‰æ ‘
+void inorder_Thread(BiTree *p);// ä¸­åºçº¿ç´¢åŒ–
+void InOrder(BiTree *bt);// ä¸­åºé€’å½’éå†ç®—æ³•ç»“æœ
+void InOrder3(BiTree *bt);// ä¸­åºéé€’å½’éå†ç®—æ³•ç»“æœ
 BiTree *Inorder_Next(BiTree *p);
-void Travel_inorder(BiTree *b);// ÏßË÷»¯¶ş²æÊ÷
-int TreeDepth(BiTree *bt);//Éî¶Èº¯Êı
-void PrintTree(BiTree *bt,int nLayer);// °´Ê÷×´´òÓ¡¶ş²æÊ÷
+void Travel_inorder(BiTree *b);// çº¿ç´¢åŒ–äºŒå‰æ ‘
+int TreeDepth(BiTree *bt);//æ·±åº¦å‡½æ•°
+void PrintTree(BiTree *bt,int nLayer);// æŒ‰æ ‘çŠ¶æ‰“å°äºŒå‰æ ‘
 
-//Ö÷º¯Êı
+//ä¸»å‡½æ•°
 
 int main()
 {
@@ -237,17 +237,17 @@ int main()
 
   root=CreateBiTree();
   nLayer=TreeDepth(root);
-  inorder_Thread(root);// ÖĞĞòÏßË÷»¯
+  inorder_Thread(root);// ä¸­åºçº¿ç´¢åŒ–
 
-  printf("\nÖĞĞòµİ¹é±éÀúËã·¨½á¹û£º");
+  printf("\nä¸­åºé€’å½’éå†ç®—æ³•ç»“æœï¼š");
   InOrder(root);
-  printf("\nÖĞĞò·Çµİ¹é±éÀúËã·¨½á¹û£º");
+  printf("\nä¸­åºéé€’å½’éå†ç®—æ³•ç»“æœï¼š");
   InOrder3(root);
-  printf("\nÖĞĞòÏßË÷»¯¶ş²æÊ÷±éÀúËã·¨½á¹û£º");
+  printf("\nä¸­åºçº¿ç´¢åŒ–äºŒå‰æ ‘éå†ç®—æ³•ç»“æœï¼š");
   Travel_inorder(root);
-  printf("\nÖĞĞò±éÀú¶ş²æÊ÷µÄ¸ß¶È£º");
+  printf("\nä¸­åºéå†äºŒå‰æ ‘çš„é«˜åº¦ï¼š");
   printf("%d",nLayer);
-  printf("\nÖĞĞò±éÀú¶ş²æÊ÷µÄ´òÓ¡£º\n");
+  printf("\nä¸­åºéå†äºŒå‰æ ‘çš„æ‰“å°ï¼š\n");
   PrintTree(root,nLayer);
   printf("\n");
 }
