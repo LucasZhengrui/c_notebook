@@ -1,7 +1,7 @@
 #include<stdio.h>
 #define N 11
 
-void input(int R[N])// ÊäÈëº¯Êı
+void input(int R[N])// è¾“å…¥å‡½æ•°
 {
   for(int i=1;i<=N;i++)
   {
@@ -9,7 +9,7 @@ void input(int R[N])// ÊäÈëº¯Êı
   }
 }
 
-void output(int R[N])// Êä³öº¯Êı
+void output(int R[N])// è¾“å‡ºå‡½æ•°
 {
   for(int i=1;i<=N;i++)
   {
@@ -18,9 +18,9 @@ void output(int R[N])// Êä³öº¯Êı
   printf("\n");
 }
 
-void sort(int R[N])// Ã°ÅİÅÅĞòº¯Êı
+void sort(int R[N])// å†’æ³¡æ’åºå‡½æ•°
 {
-  int temp=0;// ¶¨ÒåÖĞ¼ä±äÁ¿
+  int temp=0;// å®šä¹‰ä¸­é—´å˜é‡
   for(int i=1;i<=N;i++)
   {
     for(int j=i+1;j<=N;j++)
@@ -35,9 +35,9 @@ void sort(int R[N])// Ã°ÅİÅÅĞòº¯Êı
   }
 }
 
-int Mid_Search(int R[N],int key)// ÕÛ°ë²éÕÒº¯Êı
+int Mid_Search(int R[N],int key)// æŠ˜åŠæŸ¥æ‰¾å‡½æ•°
 {
-  int temp=0;// ¶¨ÒåÖĞ¼ä±äÁ¿
+  int temp=0;// å®šä¹‰ä¸­é—´å˜é‡
   for(int i=1;i<=N;i++)
   {
     for(int j=i+1;j<=N;j++)
@@ -73,10 +73,10 @@ int Mid_Search(int R[N],int key)// ÕÛ°ë²éÕÒº¯Êı
   return -1;
 }
 
-// º¯ÊıµÄÉùÃ÷
-void input(int R[N]);// ÊäÈëº¯Êı
-void output(int R[N]);// Êä³öº¯Êı
-int Mid_Search(int R[N],int key);// ÕÛ°ë²éÕÒº¯Êı
+// å‡½æ•°çš„å£°æ˜
+void input(int R[N]);// è¾“å…¥å‡½æ•°
+void output(int R[N]);// è¾“å‡ºå‡½æ•°
+int Mid_Search(int R[N],int key);// æŠ˜åŠæŸ¥æ‰¾å‡½æ•°
 
 int main(int argc, char const *argv[]) {
   int R[N];
@@ -92,11 +92,11 @@ int main(int argc, char const *argv[]) {
   ret=Mid_Search(R,key);
   if(ret!=-1)
   {
-    printf("²éÕÒ³É¹¦\n");
+    printf("æŸ¥æ‰¾æˆåŠŸ\n");
   }
   else
   {
-    printf("²éÕÒÊ§°Ü\n");
+    printf("æŸ¥æ‰¾å¤±è´¥\n");
   }
   return 0;
 }
