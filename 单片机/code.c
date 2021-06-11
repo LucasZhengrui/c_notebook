@@ -9,36 +9,38 @@ sbit KEY_OUT_2 = P2^2;
 sbit KEY_OUT_3 = P2^1;
 sbit KEY_OUT_4 = P2^0;
 
-unsigned char code KeyCodeMap[4][4] = {
-	{ 0x31, 0x32, 0x33, 0x26 },
-	{ 0x34, 0x35, 0x36, 0x25 },	
-	{ 0x37, 0x38, 0x39, 0x28 },
-	{ 0x30, 0x1B, 0x0D, 0x27 },		
+unsigned char code KeyCodeMap[4][4] = { //矩阵按键编号到标准键盘键码的映射表
+	{ 0x31, 0x32, 0x33, 0x26 }, //数字键1，数字键2，数字键3，向上键
+	{ 0x34, 0x35, 0x36, 0x25 }, //数字键4，数字键5，数字键6，向左键	
+	{ 0x37, 0x38, 0x39, 0x28 }, //数字键7，数字键8，数字键9，向下键
+	{ 0x30, 0x1B, 0x0D, 0x27 }, //数字键0，ESC退出暂停键，回车键，向右键
+	//十六进制数		
 };
 
-unsigned char KeySta[4][4] = {
+unsigned char KeySta[4][4] = { //全部矩阵按键的当前状态
 	{1, 1, 1, 1}, {1, 1, 1, 1}, {1, 1, 1, 1}, {1, 1, 1, 1}
 };
 
-signed long beats = 0;
+signed long beats = 0; //电机转动节拍总数
 
 void KeyDriver();
 
-void main()
+void main() //主函数
 {
-	EA = 1;
-	TMOD = 0x01;
-	TH0 = 0xFC;
+	EA = 1; //使能总中断
+	TMOD = 0x01; //设置 T0 为模式 1
+	TH0 = 0xFC; //为 T0 赋初值 0xFC67，定时 1 ms
 	TL0 = 0x67;
-	ET0 = 1;
-	TR0 = 1;
+	ET0 = 1; //使能 T0 中断
+	TR0 = 1; //启动 T0
 
 	while(1)
 	{
-		KeyDriver();
+		KeyDriver(); //调用按键驱动函数
 	}
 }
 
+// 步进电机启动函数，angle为需转过的角度
 void StartMotor(signed long angle)
 {
 	EA = 0;
