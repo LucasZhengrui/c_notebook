@@ -42,12 +42,13 @@ void main() //主函数
 
 // 步进电机启动函数，angle为需转过的角度
 void StartMotor(signed long angle)
-{
+{ //在计算前关闭中断，完成后再打开，以避免中断打断计算过程而造成错误
 	EA = 0;
-	beats = (angle * 4076)/360;
+	beats = (angle * 4076)/360; //实测为 4076 拍转动一圈
 	EA = 1;	
 }
 
+//步进电机停止函数
 void StopMotor()
 {
 	EA = 0; 
@@ -55,80 +56,84 @@ void StopMotor()
 	EA = 1;
 }
 
+//按键动作函数，根据键码执行相应的操作，keycode为按键键码
 void KeyAction(unsigned char keycode)
 {
-	static bit dirMotor = 0;
+	static bit dirMotor = 0; //电机转动方向
 
-	if((keycode >= 0x30) && (keycode <= 0x39))
+	if((keycode >= 0x30) && (keycode <= 0x39)) //控制电机转动 1 ~ 9 圈
 	{
 		if(dirMotor == 0)
 			StartMotor(360 * (keycode-0x30));
 		else
 			StartMotor(-360 * (keycode-0x30));
 	}
-	else if (keycode == 0x26)
+	else if (keycode == 0x26) //向上键，控制转动方向为正转
 	{
 		dirMotor = 0;
 	}
-	else if (keycode == 0x28)
+	else if (keycode == 0x28) //向下键，控制转动方向为反转
 	{
 		dirMotor = 1;
 	}
-	else if (keycode == 0x25)
+	else if (keycode == 0x25) //向左键，固定正转90度
 	{
 		StartMotor(90);
 	}
-	else if (keycode == 0x27)
+	else if (keycode == 0x27) //向右键，固定反转90度
 	{
 		StartMotor(-90);
 	}
-	else if (keycode == 0x1B)
+	else if (keycode == 0x1B) //ESC键，停止转动
 	{
 		StopMotor();
 	}
 }
 
+//按键驱动函数，检测按键动作，调度相应动作函数，需在主循环中调用
 void KeyDriver()
 {
 	unsigned char i, j;
-	static unsigned char backup[4][4] = {
+	static unsigned char backup[4][4] = { //按键值备份，保存前一次的值
 		{1, 1, 1, 1}, {1, 1, 1, 1}, {1, 1, 1, 1}, {1, 1, 1, 1} 
 	};
 
-	for(i = 0; i < 4; i++)
+	for(i = 0; i < 4; i++) //循环检测 4*4 的矩阵按键
 	{
 		for(j = 0; j < 4; j++)
 		{
-			if(backup[i][j] != KeySta[i][j])
+			if(backup[i][j] != KeySta[i][j]) //检测按键动作
 			{
-				if(backup[i][j] != 0)
+				if(backup[i][j] != 0) //按键按下时执行动作
 				{
-					KeyAction(KeyCodeMap[i][j]);
+					KeyAction(KeyCodeMap[i][j]); //调用按键动作函数
 				}
-				backup[i][j] = KeySta[i][j];
+				backup[i][j] = KeySta[i][j]; //刷新前一次的备份值
 			}
 		}
 	}
 }
 
+//按键扫描函数，需在定时中断调用，推荐调用间隔 1 ms
 void KeyScan()
 {
 	unsigned char i;
-	static unsigned char keyout = 0;
-	static unsigned char keybuf[4][4] = {
+	static unsigned char keyout = 0; //矩阵按键扫描输出索引
+	static unsigned char keybuf[4][4] = { //矩阵按键扫描缓冲区
 		{0xFF, 0xFF, 0xFF, 0xFF}, {0xFF, 0xFF, 0xFF, 0xFF},
 		{0xFF, 0xFF, 0xFF, 0xFF}, {0xFF, 0xFF, 0xFF, 0xFF}
 	};
-
+	
+//将一行的4个按键值移入缓冲区
 	keybuf[keyout][0] = (keybuf[keyout][0] << 1) | KEY_IN_1;
 	keybuf[keyout][1] = (keybuf[keyout][1] << 1) | KEY_IN_2;
 	keybuf[keyout][2] = (keybuf[keyout][2] << 1) | KEY_IN_3;
 	keybuf[keyout][3] = (keybuf[keyout][3] << 1) | KEY_IN_4;
-
-	for(i = 0; i < 4; i++)
+//消抖后更新按键状态
+	for(i = 0; i < 4; i++) //每行 4 个按键，所以循环 4 次
 	{
 		if((keybuf[keyout][i] & 0x0F) == 0x00)
-		{
+		{// 连续 4 次扫描值为 0，即 4*4 ms内都是按下状态时，可认为按键已稳定的按下
 			KeySta[keyout][i] = 0;
 		}
 		else if((keybuf[keyout][i] & 0x0F) == 0x0f)
