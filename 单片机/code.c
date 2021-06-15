@@ -137,14 +137,15 @@ void KeyScan()
 			KeySta[keyout][i] = 0;
 		}
 		else if((keybuf[keyout][i] & 0x0F) == 0x0f)
-		{
+		{// 连续 4 次扫描值为 1，即 4*4 ms内都是弹起状态时，可认为按键已稳定地弹起
 			KeySta[keyout][i] = 1;
 		}
 	}
 
-	keyout++;
-	keyout = keyout & 0x03;
-	switch(keyout)
+// 执行下一次的扫描输出
+	keyout++; // 输出索引递增
+	keyout = keyout & 0x03; // 索引值加到 4 即归 0
+	switch(keyout) // 根据索引，释放当前输出引脚，拉低下次的输出引脚
 	{
 		case 0: KEY_OUT_4 = 1;
 				KEY_OUT_1 = 0;
@@ -163,46 +164,49 @@ void KeyScan()
 	}
 }
 
+// 电动转动控制函数
 void TurnMotor()
 {
-	unsigned char tmp;
-	static unsigned char index = 0;
-	unsigned char code BeatCode[8] = {
+	unsigned char tmp; // 临时变量
+	static unsigned char index = 0; // 节拍输出索引
+	unsigned char code BeatCode[8] = { // 步进电机节拍对应的I/O控制代码
 		0xE, 0xC, 0xD, 0x9, 0xB, 0x3, 0x7, 0x6
 	};
 
-	if(beats != 0)
+	if(beats != 0) // 节拍数不为 0 则产生一个驱动节拍
 	{
-		if(beats > 0)
+		if(beats > 0) // 节拍数大于 0 时正转
 		{
-			index++;
-			index = index & 0x07;
-			beats--;
+			index++; // 正转时节拍输出索引递增
+			index = index & 0x07; // 用 & 操作实现到 8 归 0
+			beats--; // 正转时节拍数递减
 		}
-		else
+		else // 节拍数小于 0 时反转
 		{
-			index--;
-			index = index & 0x07;
-			beats++;
+			index--; // 反转时节拍输出索引递减
+			index = index & 0x07; // 用 & 操作同样可以实现到 -1 时归 7
+			beats++; // 反转时节拍计数递增
 		}
-		tmp = P1;
-		tmp = tmp & 0xF0;
-		tmp = tmp | BeatCode[index];
-		P1 = tmp;
+		tmp = P1; // 用 tmp 把 P1 口当前值暂存
+		tmp = tmp & 0xF0; // 用 & 操作清 0 低 4 位
+		tmp = tmp | BeatCode[index]; // 用 | 操作把节拍代码写到低 4 位
+		P1 = tmp; // 把低 4 位的节拍代码和高 4 位的原值送回 P1
 	}
-	else
+	else // 节拍数为 0 则关闭电机所有的相
 	{
 		P1 = P1 | 0x0F;
 	}
 }
 
+// T0 中断服务函数，用于按键扫描与电机转动控制
 void InterruptTimer0() interrupt 1
 {
 	static bit div = 0;
 
-	TH0 = 0xFC;
+	TH0 = 0xFC; // 重新加载初值
 	TL0 = 0x67;
-	KeyScan();
+	KeyScan(); // 执行按键扫描
+// 用一个静态 bit 变量实现二分频，即 2 ms 定时，用于控制电机
 	div = ~div;
 	if(div == 1)
 	{
